@@ -40,8 +40,8 @@ func Echo(ctx context.Context, msg string) (string, error) {
 
 // Gateway
 
-func RegisterGateway(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts ...grpc.DialOption) error {
-	return pb.RegisterEchoServiceHandlerFromEndpoint(ctx, mux, endpoint, opts)
+func RegisterGateway(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return pb.RegisterEchoServiceHandler(ctx, mux, conn)
 }
 
 // Server
