@@ -19,6 +19,7 @@ handlers:
 - url: /swagger-ui
   static_dir: swagger-ui
   secure: always
+  login: admin
 
 - url: /.*
   secure: always
