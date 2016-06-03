@@ -7,6 +7,7 @@ import (
 
 	"golang.org/x/net/context"
 
+	"github.com/gengo/grpc-gateway/runtime"
 	"github.com/k2wanko-sandbox/appengine-grpc-gateway/internal"
 	pb "github.com/k2wanko-sandbox/appengine-grpc-gateway/internal/echo"
 )
@@ -37,13 +38,23 @@ func Echo(ctx context.Context, msg string) (string, error) {
 	return res.Value, nil
 }
 
+// Gateway
+
+func RegisterGateway(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts ...grpc.DialOption) error {
+	return pb.RegisterEchoServiceHandlerFromEndpoint(ctx, mux, endpoint, opts)
+}
+
 // Server
+
+func RegisterServer(srv *grpc.Server) {
+	pb.RegisterEchoServiceServer(srv, new(Service))
+}
 
 var _ pb.EchoServiceServer = &Service{}
 
 type Service struct{}
 
 func (s *Service) Echo(ctx context.Context, msg *pb.Message) (*pb.Message, error) {
-	fmt.Printf("Context: %#v\nMessage: %#v", ctx, msg)
+	fmt.Printf("Context: %#v\nMessage: %#v\n", ctx, msg)
 	return msg, nil
 }
