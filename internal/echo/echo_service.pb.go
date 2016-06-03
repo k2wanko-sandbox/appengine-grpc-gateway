@@ -5,6 +5,11 @@
 /*
 Package echo is a generated protocol buffer package.
 
+Echo Service
+
+Echo Service API consists of a single service which returns
+a message.
+
 It is generated from these files:
 	internal/echo/echo_service.proto
 
@@ -34,6 +39,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
+// SimpleMessage represents a simple message sent to the Echo service.
 type Message struct {
 	Value string `protobuf:"bytes,1,opt,name=value" json:"value,omitempty"`
 }
@@ -58,6 +64,10 @@ const _ = grpc.SupportPackageIsVersion2
 // Client API for EchoService service
 
 type EchoServiceClient interface {
+	// Echo method receives a simple message and returns it.
+	//
+	// The message posted as the id parameter will also be
+	// returned.
 	Echo(ctx context.Context, in *Message, opts ...grpc.CallOption) (*Message, error)
 }
 
@@ -81,6 +91,10 @@ func (c *echoServiceClient) Echo(ctx context.Context, in *Message, opts ...grpc.
 // Server API for EchoService service
 
 type EchoServiceServer interface {
+	// Echo method receives a simple message and returns it.
+	//
+	// The message posted as the id parameter will also be
+	// returned.
 	Echo(context.Context, *Message) (*Message, error)
 }
 
