@@ -1,12 +1,25 @@
-application: helloworld
-version: 1
 runtime: go
 api_version: go1
+threadsafe: yes
 
 handlers:
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
+  http_headers:
+    Access-Control-Allow-Origin: "*"
+
+- url: /echo_service\.swagger\.json
+  static_files: echo_service.swagger.json
+  upload: echo_service\.swagger\.json
+  secure: always
+  http_headers:
+    Access-Control-Allow-Origin: "*"
+
+- url: /swagger-ui
+  static_dir: swagger-ui
+  secure: always
 
 - url: /.*
+  secure: always
   script: _go_app

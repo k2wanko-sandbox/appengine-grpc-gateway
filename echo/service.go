@@ -1,8 +1,6 @@
 package echo
 
 import (
-	"fmt"
-
 	"google.golang.org/grpc"
 
 	"golang.org/x/net/context"
@@ -55,6 +53,7 @@ var _ pb.EchoServiceServer = &Service{}
 type Service struct{}
 
 func (s *Service) Echo(ctx context.Context, msg *pb.Message) (*pb.Message, error) {
-	fmt.Printf("Context: %#v\nMessage: %#v\n", ctx, msg)
+	//log.Infof(ctx, "Message: %#v", msg) //ToDo: Fix
+	msg.Value = "Server: " + msg.Value
 	return msg, nil
 }
