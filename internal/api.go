@@ -12,14 +12,14 @@ var (
 	ctxKeyEchoClient = "EchoClient key"
 )
 
-type newClientFunc func(*grpc.ClientConn) (interface{}, interface{})
+type NewClientFunc func(*grpc.ClientConn) (interface{}, interface{})
 
 var (
 	newClientFuncsMu sync.Mutex
-	newClientFuncs   = make(map[string]newClientFunc)
+	newClientFuncs   = make(map[string]NewClientFunc)
 )
 
-func RegisterNewClientFunc(name string, f newClientFunc) {
+func RegisterNewClientFunc(name string, f NewClientFunc) {
 	newClientFuncsMu.Lock()
 	defer newClientFuncsMu.Unlock()
 	if _, dup := newClientFuncs[name]; dup {
