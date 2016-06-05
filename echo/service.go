@@ -1,7 +1,9 @@
 package echo
 
 import (
+	"google.golang.org/appengine/log"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 
 	"golang.org/x/net/context"
 
@@ -53,7 +55,9 @@ var _ pb.EchoServiceServer = &Service{}
 type Service struct{}
 
 func (s *Service) Echo(ctx context.Context, msg *pb.Message) (*pb.Message, error) {
-	//log.Infof(ctx, "Message: %#v", msg) //ToDo: Fix
+	//log.Infof(ctx, "Message: %#v", msg)
+	md, _ := metadata.FromContext(ctx)
+	log.Infof(ctx, "Metadata: %#v", md)
 	msg.Value = "Server: " + msg.Value
 	return msg, nil
 }
