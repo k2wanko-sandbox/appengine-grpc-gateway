@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	reqID = "grpc-metadata-x-appengine-request-id-hash"
+	reqID = "x-appengine-request-id-hash"
 	reqMu sync.RWMutex
 	reqs  = make(map[string]*http.Request)
 )
