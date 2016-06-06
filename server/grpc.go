@@ -59,7 +59,7 @@ func createGRPCHandler(ctx context.Context) http.Handler {
 	if err != nil {
 		panic(err)
 	}
-	return (http.HandlerFunc)(func(w http.ResponseWriter, r *http.Request) {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		for name, hs := range r.Header {
 			for _, h := range hs {
 				r.Header.Add("Grpc-Metadata-"+name, h)
