@@ -11,7 +11,7 @@ $ npm install
 # Run
 
 ```
-$ goapp serve
+$ goapp serve server
 ```
 
 ```
