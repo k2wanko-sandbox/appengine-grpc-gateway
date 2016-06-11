@@ -10,6 +10,7 @@ import (
 	"github.com/gengo/grpc-gateway/runtime"
 	"github.com/k2wanko-sandbox/appengine-grpc-gateway/internal"
 	pb "github.com/k2wanko-sandbox/appengine-grpc-gateway/internal/echo"
+	"github.com/k2wanko/grpc-pipe/gateway"
 )
 
 var key = "echo service client key"
@@ -55,9 +56,13 @@ var _ pb.EchoServiceServer = &Service{}
 type Service struct{}
 
 func (s *Service) Echo(ctx context.Context, msg *pb.Message) (*pb.Message, error) {
-	//log.Infof(ctx, "Message: %#v", msg)
 	md, _ := metadata.FromContext(ctx)
 	log.Infof(ctx, "Metadata: %#v", md)
 	msg.Value = "Server: " + msg.Value
 	return msg, nil
+}
+
+// grpc-pipe
+func RegisterService(s *gateway.Server) {
+	s.RegisterService(pb.RegisterEchoServiceServer, pb.RegisterEchoServiceHandler, new(Service))
 }
